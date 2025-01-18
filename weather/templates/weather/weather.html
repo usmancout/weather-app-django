@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'style/styles.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="weather-box">
+        
+        <h1>
+            <img src="{% static 'images/icon.png' %}" class="weather-icon"> Weather App
+        </h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter City" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather_data %}
+            <div class="weather-info">
+                <h2>{{ weather_data.city }}</h2>
+                <p><strong>Temperature:</strong> {{ weather_data.temperature }}°C</p>
+                <p><strong>Humidity:</strong> {{ weather_data.humidity }}%</p>
+                <p><strong>Wind Speed:</strong> {{ weather_data.wind_speed }} m/s</p>
+                <p><strong>Description:</strong> {{ weather_data.description }}</p>
+            </div>
+        {% endif %}
+
+        {% if error_message %}
+            <div class="error-message">
+                <p>{{ error_message }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
